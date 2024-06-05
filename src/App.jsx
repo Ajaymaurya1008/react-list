@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import RecipeReviewCard from "./RecipeReviewCard";
+import MaterialCard from "./components/MaterialCard";
 import axios from "axios";
 import toast from "react-hot-toast";
 
@@ -32,7 +32,6 @@ function App() {
         toast.success(`User ${user[0].name} found!`);
       }
     } catch (error) {
-
       toast.error("Error fetching users");
     }
   };
@@ -68,13 +67,13 @@ function App() {
 
       {/* Container for user cards */}
       <div className="flex flex-wrap items-center justify-center gap-20">
-        {/* Displayed the user cards and filter them by the search input and mapped to the RecipeReviewCard component */}
+        {/* Displayed the user cards and filter them by the search input and mapped to the MaterialCard component */}
         {users
           .filter((user) =>
             user.name.toLowerCase().includes(search.toLowerCase()),
           )
           .map((user) => (
-            <RecipeReviewCard
+            <MaterialCard
               key={user.id}
               name={user.name}
               email={user.email}

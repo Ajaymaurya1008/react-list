@@ -24,7 +24,7 @@ const ExpandMore = styled((props) => {
 }));
 
 // Define the RecipeReviewCard component
-export default function RecipeReviewCard({ name, email, content }) {
+export default function MaterialCard({ name, email, content }) {
   return (
     // Card component with a maximum width of 345px
     <Card sx={{ maxWidth: 345 }}>
