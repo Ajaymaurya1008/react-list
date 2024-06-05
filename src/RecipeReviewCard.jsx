@@ -25,7 +25,6 @@ const ExpandMore = styled((props) => {
 
 // Define the RecipeReviewCard component
 export default function RecipeReviewCard({ name, email, content }) {
-
   return (
     // Card component with a maximum width of 345px
     <Card sx={{ maxWidth: 345 }}>
@@ -43,7 +42,7 @@ export default function RecipeReviewCard({ name, email, content }) {
       {/* CardContent component with the content text */}
       <CardContent>
         <Typography variant="body2" color="text.secondary">
-          {content} // Display the content text
+          {content}
         </Typography>
       </CardContent>
     </Card>
