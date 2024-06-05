@@ -1,28 +1,51 @@
 import { useEffect, useState } from "react";
 import RecipeReviewCard from "./RecipeReviewCard";
 import axios from "axios";
+import toast from "react-hot-toast";
 
 function App() {
+  // define the states for the search input and the users array
+
   const [users, setUsers] = useState([]);
   const [search, setSearch] = useState("");
 
+  // Fetch all users from the API and set them in the state
   const getUsers = async () => {
-    const res = await axios.get("https://jsonplaceholder.typicode.com/users");
-    console.log(res.data);
-    setUsers(res.data);
+    try {
+      const res = await axios.get("https://jsonplaceholder.typicode.com/users");
+      setUsers(res.data);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
+  // Handle the form submission and call the getUser function
   const getUser = (e) => {
-    e.preventDefault();
-    console.log(search);
+    try {
+      e.preventDefault();
+      const user = users.filter((user) =>
+        user.name.toLowerCase().includes(search.toLowerCase()),
+      );
+      if (user.length < 1) {
+        toast.error("User not found!");
+      } else {
+        toast.success(`User ${user[0].name} found!`);
+      }
+    } catch (error) {
+
+      toast.error("Error fetching users");
+    }
   };
 
+  // useEffect to call the getUsers function when the component mounts and updates
   useEffect(() => {
     getUsers();
   }, []);
 
   return (
-    <div className="flex min-h-screen h-full flex-col bg-gradient-to-br from-blue-800 to-violet-600 gap-20 p-10 items-center">
+    // Main container with Tailwind CSS classes
+    <div className="flex h-full min-h-screen flex-col items-center gap-20 bg-gradient-to-br from-blue-800 to-violet-600 p-10">
+      {/* Form for searching users */}
       <form
         onSubmit={getUser}
         className="abg-white relative mt-8 w-full max-w-sm space-y-2 overflow-hidden rounded-lg px-4 sm:mx-auto sm:space-y-0"
@@ -42,10 +65,13 @@ function App() {
           Search
         </button>
       </form>
-      <div className="flex gap-20 flex-wrap justify-center items-center">
+
+      {/* Container for user cards */}
+      <div className="flex flex-wrap items-center justify-center gap-20">
+        {/* Displayed the user cards and filter them by the search input and mapped to the RecipeReviewCard component */}
         {users
           .filter((user) =>
-            user.name.toLowerCase().includes(search.toLowerCase())
+            user.name.toLowerCase().includes(search.toLowerCase()),
           )
           .map((user) => (
             <RecipeReviewCard
